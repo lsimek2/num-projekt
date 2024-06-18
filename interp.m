@@ -32,6 +32,7 @@ function C = interp(
   H = f(Tau, Eta)';
 
   % kao u literaturi (14.2., str. 416) definiramo F i G
+  % i poslije rjesavamo sustave
   F = zeros(m);
   for i=1:m
     % pod pretpostavkom t_i < tau_i < t_{i+k} (u, eta u drugom slucaju)

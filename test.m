@@ -1,7 +1,7 @@
 % isprobavanje algorima za interpoliranje plohe
 % tenzorskim produktom B-splajnova
 
-f = @(x, y) 10 * sin(x + y.^2);
+f = @(x, y) 10 * cos(x + y.^2);
 
 % na [-4, 3] X [-3, 2]
 t = [-4, -4, -4, -4, -3, -2, -1, 0, 1, 2, 3, 3, 3, 3];
@@ -42,8 +42,9 @@ shading interp;
 hold on;
 
 
-cmap_2 = rainbow(color_bits);
-rgb_2 = data2rgb(z, color_bits, cmap_2);
+cmap_2 = viridis(color_bits);
+% bojamo ovisno o razlici do tocne vrijednosti
+rgb_2 = data2rgb(abs(f(GX, GY) - z), color_bits, cmap_2);
 
 surf(gx, gy, z, rgb_2);
 

@@ -5,12 +5,10 @@ function z = eval(
     k, l  % redovi 1d Bsplineova
   )
 
-  m = length(t) - k;
-  n = length(u) - l;
-
   [_, gsx] = size(tau);
   [_, gsy] = size(eta);
 
+  % postupamo slicno kao u literaturi, str. 396
   z = zeros(gsx, gsy);
   vy = zeros(1, l);
   vx = zeros(1, k);
@@ -19,8 +17,7 @@ function z = eval(
     ni = bintrazenje(y, u);
 
     for iterj=(ni-l+1):ni
-        idx = iterj - (ni-l);
-        vy(idx) = deBoorCoxRec(y, l, iterj, u);
+        vy(iterj-ni+l) = deBoorCoxRec(y, l, iterj, u);
     endfor
 
     for i=1:gsx  % x-koordinata u mrezi
@@ -28,8 +25,7 @@ function z = eval(
       mi = bintrazenje(x, t);
 
       for iteri=(mi-k+1):mi
-        idx = iteri - (mi-k);
-        vx(idx) = deBoorCoxRec(x, k, iteri, t);
+        vx(iteri-mi+k) = deBoorCoxRec(x, k, iteri, t);
       endfor
 
       z(i, j) = vx * C((mi-k+1):mi, (ni-l+1):ni) * vy';
@@ -54,5 +50,5 @@ function z = eval(
 ##  endfor
 ##
 ##  z = Bx * C * By';
-
 endfunction
+
