@@ -21,7 +21,7 @@ gsx = 25;
 gsy = 20;
 gx = linspace(ax, bx, gsx);
 gy = linspace(ay, by, gsy);
-GX, GY = meshgrid(gx, gy);
+[GX, GY] = meshgrid(gx, gy);
 
 z = eval(C, gx, gy, t, u, k, l);
 z = z';
