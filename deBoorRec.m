@@ -1,5 +1,6 @@
 % de Boorov algoritam (alfe)
-function [y] = deBoorRec(x, k, n, t, a)
+function [y] = deBoorRec(x, t, a)
+  k = length(t) - 2;
 
   [i] = bintrazenje(x, t);
 
