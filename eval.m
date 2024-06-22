@@ -11,7 +11,21 @@ function z = eval(
   % postupamo slicno kao u literaturi, str. 396
   z = zeros(gsx, gsy);
   vy = zeros(1, l);
-  vx = zeros(1, k);
+
+  vx = zeros(gsx, k);
+  vmi = zeros(gsx);
+  % da ne ponavljamo evaluacije deBoorCoxRec funkcije
+  % popunimo vektor(e) vx sada
+  for i=1:gsx
+    x = tau(i);
+    mi = bintrazenje(x, t);
+
+    for iteri=(mi-k+1):mi
+      vx(i, iteri-mi+k) = deBoorCoxRec(x, k, iteri, t);
+    endfor
+    vmi(i) = mi;
+  endfor
+
   for j=1:gsy  % y-koordinata u mrezi
     y = eta(j);
     ni = bintrazenje(y, u);
@@ -21,14 +35,8 @@ function z = eval(
     endfor
 
     for i=1:gsx  % x-koordinata u mrezi
-      x = tau(i);
-      mi = bintrazenje(x, t);
-
-      for iteri=(mi-k+1):mi
-        vx(iteri-mi+k) = deBoorCoxRec(x, k, iteri, t);
-      endfor
-
-      z(i, j) = vx * C((mi-k+1):mi, (ni-l+1):ni) * vy';
+      mi = vmi(i);
+      z(i, j) = vx(i, :) * C((mi-k+1):mi, (ni-l+1):ni) * vy';
     endfor
   endfor
 
